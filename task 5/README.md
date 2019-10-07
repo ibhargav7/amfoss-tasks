@@ -1,0 +1,1 @@
+Completed the task by writing the query in graphiql which is git api explorer. I did the by the python script of gitlit repository doone by amfoss.Could't host the website because the token is deleted right after pushing the html file into git.

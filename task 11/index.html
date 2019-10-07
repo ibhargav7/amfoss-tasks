@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+ </head>
+ <style>
+    body{
+        text-align:center;
+    }
+ </style>
+ <body>
+    <div>
+   
+    <h style="font-size:40px">PONG GAME</h>
+    <input type='text' id="1player" placeholder="enter player1 name" onsearch='hide()'>
+    
+    <input type='text' id="2player" placeholder="enter player2 name" onsearch='hide2()'>
+
+
+    <p style="font-size:20px">press spacebar to start the game</p>  
+    <canvas id="canvas" width='600' height="400"></canvas>
+    </div>
+    <br>
+   <b style="font-size:20px">CONTROLS</b>
+   </br>
+   
+   <p>Left paddle belongs to player1 and right paddle belongs to player.To move the player1's paddle up and down press "w" and "s" respectively. To move the player2's paddle up and down press "ArrowUp" and "ArrowDown" respectively
+    
+    <script>
+    function hide(){
+        document.getElementById('1player').style.display='none'
+    
+    }
+    function hide2(){
+        document.getElementById('2player').style.display='none'
+    }
+    
+    document.addEventListener("keydown",playdown,false)
+    document.addEventListener("keyup",playdown,false)
+function playdown(e){
+    if(e.code=="Space"){
+        play=true
+    }
+}
+function palyup(e){
+    if(e.code=="space"){
+        play=false
+    }
+}
+var canvas = document.getElementById('canvas')
+
+var ctx = canvas.getContext('2d');
+const user1 = {
+    x: 0,
+    y: (canvas.height - 100) / 2,
+    width: 20,
+    height: 100,
+    score: 0,
+    color: "white"
+}
+const user2 = {
+    x: canvas.width-20,
+    y: (canvas.height - 100) / 2,
+    width: 20,
+    height: 100,
+    score: 0,
+    color: "white"
+}
+const ball = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 7,
+    velocity_x: 5,
+    velocity_y: 5,
+    speed: 5,
+    color: "white"
+}
+
+function rect(x, y, width, height, color) {
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, width, height)
+}
+
+function circle(x, y, radius, color) {
+    ctx.fillStyle = color
+    ctx.beginPath()
+    ctx.arc(x, y, radius, 0, Math.PI * 2, true)
+    ctx.closePath()
+    ctx.fill()
+}
+
+function reset() {
+    ball.x = canvas.width / 2
+    ball.y = canvas.height / 2
+    ball.velocity_x = -ball.velocity_x
+    speed = 5
+}
+
+function text(text, x, y) {
+    ctx.fillStyle = "white"
+    ctx.font = "45px fantasy"
+    ctx.fillText(text, x, y)
+}
+var upPressed1 = false;
+var downPressed1 = false;
+var upPressed2 = false;
+var downPressed2 = false;
+
+document.addEventListener('keydown',keydownc1,false)
+document.addEventListener('keyup',keyupc1,false)
+document.addEventListener('keydown',keydownc2,false)
+document.addEventListener('keyup',keyupc2,false)
+
+function keydownc2(e) {
+    if(e.key == "ArrowUp") {
+        upPressed2 = true;
+    }
+    else if(e.key == "ArrowDown") {
+        downPressed2 = true;
+    }
+}
+
+function keyupc2(e) {
+        if(e.key == "ArrowUp") {
+        upPressed2 = false;
+    }
+    else if(e.key == "ArrowDown") {
+        downPressed2 = false;
+    }
+}
+function keydownc1(e) {
+        if(e.key == "W"||e.key == "w") {
+        upPressed1 = true;
+    }
+    else if(e.key == "S"||e.key == "s") {
+        downPressed1 = true;
+    }
+}
+function keyupc1(e) {
+        if(e.key == "W"||e.key == "w") {
+        upPressed1 = false;
+    }
+    else if(e.key == "S"||e.key == "s") {
+        downPressed1 = false;
+    }
+}
+
+function collision(b, p) {
+    p.top = p.y;
+    p.bottom = p.y + p.height;
+    p.left = p.x;
+    p.right = p.x + p.width;
+
+    b.top = b.y - b.radius;
+    b.bottom = b.y + b.radius;
+    b.left = b.x - b.radius;
+    b.right = b.x + b.radius;
+    return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
+}
+
+function update() {
+    if (ball.x - ball.radius < 0) {
+        user2.score++;
+        reset()
+    }
+    else if (ball.x + ball.radius > canvas.width) {
+        user1.score++
+        reset()
+    }
+    ball.x += ball.velocity_x
+    ball.y += ball.velocity_y
+    if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+        ball.velocity_y = -ball.velocity_y
+
+    }
+    
+    if(upPressed1){
+        user1.y-=20
+        if(user1.y<0){
+            user1.y=0
+        }
+    }
+    if(downPressed1){
+        user1.y+=20
+        if(user1.y+100>canvas.height){
+            user1.y=canvas.height-100
+        }
+    }
+    if(upPressed2){
+        user2.y-=20
+        if(user2.y<0){
+            user2.y=0
+        }
+    }
+    if(downPressed2){
+        user2.y+=20
+        if(user2.y+100>canvas.height){
+            user2.y=canvas.height-100
+        }
+    }
+    let player = (ball.x + ball.radius < canvas.width / 2) ? user1 : user2;
+    if (collision(ball, player)) {
+        let collisionpoint = ball.y - (player.y + player.height / 2);
+        collisionpoint = collisionpoint / (player.height / 2);
+        let rad = (Math.PI / 4) * collisionpoint;
+        let direction = (ball.x + ball.radius < canvas.width / 2) ? 1 : -1;
+        ball.velocity_x = direction * ball.speed * Math.cos(rad);
+        ball.velocity_y = ball.speed * Math.sin(rad);
+        ball.speed += 0.2
+    }
+}
+
+function render() {
+    rect(0, 0, canvas.width, canvas.height, "black");
+    text(user1.score, canvas.width / 4, canvas.height / 6);
+    text(user2.score, 3 * canvas.width / 4, canvas.height / 6);
+    rect(user1.x, user1.y, user1.width, user1.height, "white");
+    rect(user2.x, user2.y, user2.width, user2.height, "white");
+    circle(ball.x, ball.y, ball.radius, "white");
+}
+function game(){
+    render()
+    if(play){
+        update()
+    }
+}
+
+let fps = 60;
+let loop = setInterval(game, 1000 / fps);
+
+
+    </script>
+ </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Github Profile Finder</title> 
+    </head>
+       <style>
+        body{
+            background-image: url("/home/bhargav/Downloads/background.jpg");
+            background-size: cover;
+            color:white;
+            font-size:20px;
+        }
+        .lol {
+            text-align:center;
+        }
+        .identicon {
+            text-align:center;
+        }
+       </style>
+    <body>
+        <div class="lol">
+         <h1>Github profile finder</h1>
+         <img src="github.jpg" height=292 width=520>
+         <h3>Type the Github username of person. you  can get name, bio, profile picture of the avatar</h3>
+         <input type = "text" id= "username" placeholder= "enter username .. " >
+         <button type="button" onclick="data()">Search</button>
+        
+         <div id="login"></div>
+         <div id="name"></div>
+         <div id="bio"></div>
+         <div id="avatar"></div>
+         <img id="pic" height = "200" width= "200"></div>
+        
+        </div>
+        <div class="identicon">
+         <div id="Identicon"></div>
+         <img id="identicon" height="200" width="200"></div>
+        </div>
+    </body>
+        <script>
+    function data(){
+         var user = document.getElementById('username').value;
+         var query = `query viewer($login: String!){
+                                 user(login: $login) {
+                                         login
+                                         name 
+                                         bio
+                                         avatarUrl
+                                         }
+                                     }`
+         fetch('https://api.github.com/graphql',{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json','Accept': 'application/json',
+                           'Authorization': 'bearer b4c4439a006832371f8b9cf919ce66b8d5421dde'},
+            body: JSON.stringify({
+                            query,
+                            variables:{"login":user},
+                        })
+            })
+               .then(res=> res.json())
+               
+               .then(res => {
+                    document.getElementById("login").innerHTML = "Username: " + res.data.user.login;
+                    document.getElementById("name").innerHTML = "Name: " + res.data.user.name
+                    document.getElementById("bio").innerHTML = "Bio: " + res.data.user.bio
+                    document.getElementById("avatar").innerHTML =  "Avatar: "
+                    document.getElementById("pic").src= res.data.user.avatarUrl
+                    document.getElementById("Identicon").innerHTML = "Identicon:"
+                    document.getElementById("identicon").src = "https://github.com/identicons/" + res.data.user.login + ".png"
+               })
+    }                                     
+                  
+       </script>
+    
+
+</html>
