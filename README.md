@@ -7,7 +7,6 @@
 |   0         | Installing ubuntu| Installed ubuntu with a USB flash drive|
 |   2         | Programming  | solved all hackerrank and codeforce using python|
 |   5         |  Get it using javascript| Used graphql  query language  in js|
-
 |   6         | CLI App using GO|  done by referring dghuuble/go-twitter repository|
 |   7         | Rusted Email  | used regex crate  |
 |   8         | Capcha Breaking | used pytesseract and PIL package|
