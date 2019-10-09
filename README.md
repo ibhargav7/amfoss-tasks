@@ -5,6 +5,7 @@
 |  Task no.   |  Task Name   | Remarks                    |
 |:-----------:|:------------:|:--------------------------:|
 |   0         | Installing ubuntu| Installed ubuntu with a USB flash drive|
+|   1         | Star all the amFOSS repositories | starred all FOSS repositories by running the given code|
 |   2         | Programming  | solved all hackerrank and codeforce using python|
 |   3         | Web Scraping using Ruby| Used Nokogiri gem|
 |   4         |adv_xor| Got the flag by brute force method|
