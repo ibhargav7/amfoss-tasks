@@ -13,4 +13,8 @@ for i in range (0,n):
                     o=l-1
                     p=p*j**o
                     break
+                elif  j**l==x:
+                    p=p*j**l
+                    break
     print(p)
+
