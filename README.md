@@ -1,6 +1,6 @@
 # task-amfoss
  
- This repository is created for joining in amFOSS club at Amrita Vishwa Vidyapeetam, Amritapuri. It consists of all the tasks which were completed. Unable to do all the tasks and completed some of the tasks upto to my level of knowledge. 
+ This repository is created for joining in amFOSS club at Amrita Vishwa Vidyapeetam, Amritapuri. It consists of all the tasks which were completed.  
 
 |  Task no.   |  Task Name   | Remarks                    |
 |:-----------:|:------------:|:--------------------------:|
